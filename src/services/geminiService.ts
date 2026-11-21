@@ -6,9 +6,12 @@ const GEMINI_STORAGE_KEY = 'o_an_quan_gemini_api_key';
 
 export function getStoredGeminiKey(): string {
   try {
-    return localStorage.getItem(GEMINI_STORAGE_KEY) || import.meta.env.GEMINI_API_KEY || '';
+    const env = import.meta.env as Record<string, string | undefined>;
+    const envKey = env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY || '';
+    return localStorage.getItem(GEMINI_STORAGE_KEY) || envKey;
   } catch {
-    return import.meta.env.GEMINI_API_KEY || '';
+    const env = import.meta.env as Record<string, string | undefined>;
+    return env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY || '';
   }
 }
 

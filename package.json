@@ -18,6 +18,11 @@
     "websocket",
     "cyberfolk"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dducnv/gdg-project.git"
+  },
+  "homepage": "https://github.com/dducnv/gdg-project",
   "author": "GDG Community",
   "license": "MIT",
   "dependencies": {

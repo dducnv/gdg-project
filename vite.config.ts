@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  envPrefix: ['VITE_', 'GEMINI_'], // Cho phép đọc trực tiếp GEMINI_API_KEY từ file .env
   server: {
     host: '0.0.0.0',
     port: 5173,

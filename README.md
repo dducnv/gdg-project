@@ -1,6 +1,11 @@
 # Ô Ăn Quan — Cyber Folk Edition
 
+[![GitHub Repository](https://img.shields.io/badge/GitHub-dducnv%2Fgdg--project-181717?style=flat&logo=github)](https://github.com/dducnv/gdg-project)
+[![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
+
 Bản tái hiện kỹ thuật số của trò chơi dân gian kinh điển Việt Nam theo phong cách **Neo-Heritage / Obsidian Craft**, hoạt động **100% trong trình duyệt (Client-Side / Static)**, sẵn sàng deploy ngay lên **Vercel, Netlify, GitHub Pages** chỉ bằng 1 bước mà không cần bất kỳ server backend nào.
+
+- **GitHub Repository:** [https://github.com/dducnv/gdg-project](https://github.com/dducnv/gdg-project)
 
 ---
 
@@ -8,6 +13,8 @@ Bản tái hiện kỹ thuật số của trò chơi dân gian kinh điển Vi�
 
 ### Chạy Local:
 ```bash
+git clone https://github.com/dducnv/gdg-project.git
+cd gdg-project
 npm install
 npm run dev:client
 ```
