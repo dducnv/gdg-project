@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { Bot, Users, Play, Sparkles } from 'lucide-react';
+import { Bot, Users, Play, Sparkles, Key, Check } from 'lucide-react';
 import { BotDifficulty } from '../game/types';
 
 interface LobbyProps {
+  hasGeminiKey: boolean;
+  onOpenGeminiModal: () => void;
   onStartBot: (name: string, difficulty: BotDifficulty) => void;
   onStartLocal2P: (p1Name: string, p2Name: string) => void;
 }
 
 export const Lobby: React.FC<LobbyProps> = ({
+  hasGeminiKey,
+  onOpenGeminiModal,
   onStartBot,
   onStartLocal2P
 }) => {
@@ -16,9 +20,9 @@ export const Lobby: React.FC<LobbyProps> = ({
   const [botDifficulty, setBotDifficulty] = useState<BotDifficulty>('strategic');
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 py-8 md:py-12 flex flex-col items-center">
+    <div className="w-full max-w-4xl mx-auto px-4 py-6 md:py-10 flex flex-col items-center">
       {/* Hero Badge */}
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs mb-4">
+      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs mb-3">
         <Sparkles size={13} />
         <span>Neo-Heritage • Digital Craftsmanship</span>
       </div>
@@ -27,9 +31,45 @@ export const Lobby: React.FC<LobbyProps> = ({
       <h1 className="font-display font-black text-3xl md:text-5xl text-center text-white tracking-tight mb-2">
         Ô ĂN QUAN
       </h1>
-      <p className="font-mono text-xs md:text-sm text-slate-400 text-center max-w-md mb-8">
-        Bản tái hiện kỹ thuật số trò chơi dân gian Việt Nam. Hoạt động 100% trong trình duyệt với Bot AI Minimax và âm thanh tổng hợp Web Audio.
+      <p className="font-mono text-xs md:text-sm text-slate-400 text-center max-w-lg mb-6">
+        Bản tái hiện kỹ thuật số trò chơi dân gian kinh điển Việt Nam. Tích hợp trực tiếp Google Gemini AI & thuật toán Minimax chạy 100% trong trình duyệt.
       </p>
+
+      {/* Gemini API Key Banner */}
+      <div className="w-full max-w-3xl mb-8 p-3.5 rounded-2xl bg-obsidian-800/60 border border-emerald-500/30 flex items-center justify-between gap-3 backdrop-blur-md">
+        <div className="flex items-center gap-2.5">
+          <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
+            <Sparkles size={18} />
+          </div>
+          <div>
+            <div className="text-xs font-display font-bold text-white flex items-center gap-1.5">
+              <span>Đấu Với Google Gemini AI</span>
+              {hasGeminiKey ? (
+                <span className="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-mono border border-emerald-500/30 flex items-center gap-1">
+                  <Check size={10} /> Đã kích hoạt
+                </span>
+              ) : (
+                <span className="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 text-[10px] font-mono border border-amber-500/30">
+                  Chưa cài API Key
+                </span>
+              )}
+            </div>
+            <p className="text-[11px] font-mono text-slate-400">
+              {hasGeminiKey
+                ? 'Gemini 2.5 Flash sẵn sàng phân tích bàn cờ và bình luận từng nước đi.'
+                : 'Nhập Gemini API Key miễn phí từ Google AI Studio để mở khóa tính năng AI thông minh.'}
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={onOpenGeminiModal}
+          className="shrink-0 px-3.5 py-2 rounded-xl bg-obsidian-700 hover:bg-obsidian-600 text-white font-mono text-xs font-medium border border-white/[0.08] transition-all flex items-center gap-1.5"
+        >
+          <Key size={13} className="text-emerald-400" />
+          <span>{hasGeminiKey ? 'Đổi Key' : 'Nhập Key'}</span>
+        </button>
+      </div>
 
       {/* Mode Cards Grid (2 clean columns) */}
       <div className="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
@@ -40,11 +80,14 @@ export const Lobby: React.FC<LobbyProps> = ({
             <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <Bot size={28} />
             </div>
-            <h3 className="font-display font-bold text-xl text-white mb-2">
-              Đấu Thần Sỏi AI
+            <h3 className="font-display font-bold text-xl text-white mb-2 flex items-center gap-2">
+              <span>{hasGeminiKey ? 'Đấu Gemini Thần Sỏi' : 'Đấu Bot Thuật Toán'}</span>
+              {hasGeminiKey && <Sparkles size={16} className="text-amber-400" />}
             </h3>
             <p className="text-xs text-slate-400 leading-relaxed mb-6">
-              Đấu trí 1-vs-1 với thuật toán Minimax Alpha-Beta tìm nước đi tối ưu và giăng bẫy ăn liên hoàn.
+              {hasGeminiKey
+                ? 'Đối đầu với Gemini AI, nhận lời bình luận chiến thuật dí dỏm và tính toán giăng bẫy ăn liên hoàn.'
+                : 'Đấu tập 1-vs-1 với thuật toán Minimax Alpha-Beta tìm nước đi tối ưu mà không cần API key.'}
             </p>
 
             {/* Name Input */}
@@ -62,36 +105,38 @@ export const Lobby: React.FC<LobbyProps> = ({
               />
             </div>
 
-            {/* Difficulty selector */}
-            <div className="mb-6">
-              <label className="block text-[11px] font-mono text-slate-400 mb-1.5 uppercase tracking-wider">
-                Độ Khó Của Bot
-              </label>
-              <div className="flex rounded-xl bg-obsidian-900 p-1 border border-white/[0.05]">
-                <button
-                  type="button"
-                  onClick={() => setBotDifficulty('easy')}
-                  className={`flex-1 py-2 rounded-lg text-xs font-mono font-medium transition-all ${
-                    botDifficulty === 'easy'
-                      ? 'bg-obsidian-700 text-slate-200 shadow-sm'
-                      : 'text-slate-500 hover:text-slate-300'
-                  }`}
-                >
-                  Tập sự
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBotDifficulty('strategic')}
-                  className={`flex-1 py-2 rounded-lg text-xs font-mono font-bold transition-all ${
-                    botDifficulty === 'strategic'
-                      ? 'bg-emerald-500 text-obsidian-950 shadow-glow-jade'
-                      : 'text-slate-500 hover:text-slate-300'
-                  }`}
-                >
-                  Cao thủ (Minimax)
-                </button>
+            {/* Difficulty selector (when Minimax fallback) */}
+            {!hasGeminiKey && (
+              <div className="mb-6">
+                <label className="block text-[11px] font-mono text-slate-400 mb-1.5 uppercase tracking-wider">
+                  Độ Khó Của Bot
+                </label>
+                <div className="flex rounded-xl bg-obsidian-900 p-1 border border-white/[0.05]">
+                  <button
+                    type="button"
+                    onClick={() => setBotDifficulty('easy')}
+                    className={`flex-1 py-2 rounded-lg text-xs font-mono font-medium transition-all ${
+                      botDifficulty === 'easy'
+                        ? 'bg-obsidian-700 text-slate-200 shadow-sm'
+                        : 'text-slate-500 hover:text-slate-300'
+                    }`}
+                  >
+                    Tập sự
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBotDifficulty('strategic')}
+                    className={`flex-1 py-2 rounded-lg text-xs font-mono font-bold transition-all ${
+                      botDifficulty === 'strategic'
+                        ? 'bg-emerald-500 text-obsidian-950 shadow-glow-jade'
+                        : 'text-slate-500 hover:text-slate-300'
+                    }`}
+                  >
+                    Cao thủ
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <button
@@ -99,7 +144,7 @@ export const Lobby: React.FC<LobbyProps> = ({
             className="w-full py-3.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 font-display font-bold text-xs uppercase tracking-wider transition-all shadow-glow-jade flex items-center justify-center gap-2"
           >
             <Play size={16} />
-            <span>Bắt Đầu Đấu Bot</span>
+            <span>Bắt Đầu Đấu AI</span>
           </button>
         </div>
 
@@ -113,7 +158,7 @@ export const Lobby: React.FC<LobbyProps> = ({
               Chơi Cùng Máy (2 Người)
             </h3>
             <p className="text-xs text-slate-400 leading-relaxed mb-6">
-              Hai người ngồi đối diện nhau cùng thi đấu trên 1 máy tính hoặc máy tính bảng theo lượt.
+              Hai người ngồi đối diện nhau cùng thi đấu trên 1 laptop, iPad hoặc máy tính bảng theo lượt.
             </p>
 
             {/* P1 Name */}
@@ -159,8 +204,8 @@ export const Lobby: React.FC<LobbyProps> = ({
       </div>
 
       {/* Footer Info */}
-      <footer className="mt-12 text-center text-xs font-mono text-slate-500">
-        Google Developer Groups (GDG) Community Project • 100% Client-Side • Deploy Anywhere
+      <footer className="mt-10 text-center text-xs font-mono text-slate-500">
+        Google Developer Groups (GDG) Community Project • Powered by Gemini 2.5 Flash
       </footer>
     </div>
   );
